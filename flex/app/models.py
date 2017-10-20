@@ -75,10 +75,17 @@ class Goal(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=4096)
 
+class Post(models.Model):
+    text=models.CharField(max_length=1000)
+    timestamp=models.DateField()
 
-# TODO: Post, PostComment
+class PostComment(models.Model):
+    text=models.CharField(max_length=1000)
+    timestamp=models.DateField()
 
-# TODO: Message
+class Message(models.Model):
+    text=models.CharField(max_length=1000)
+    timestamp=models.DateField()
 
 # TODO: Event, Invitee
 
