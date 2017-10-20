@@ -20,7 +20,7 @@ class User(models.Model):
     bio = models.CharField(max_length=4096)
 
     def __str__(self):
-        return self.first_name
+        return self.first_name + self.last_name
 
 
 class MatchSetting(models.Model):
