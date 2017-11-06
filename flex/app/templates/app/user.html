@@ -1,0 +1,23 @@
+{% extends 'app/base.html' %}
+
+{% block body %}
+    <style type="text/css">
+        img {
+            max-width: 300px;
+            max_height:300px;
+        }
+    </style>
+    <h1>{{ profile.first_name }} {{ profile.last_name }}</h1>
+    <img src = "{{ profile.image_url }}"/>
+    <h3>Bio: </h3>
+    <span>{{ profile.bio}}</span>
+    <h3>Activities: </h3>
+    {% for activity in profile.activities.all %}
+        <span>{{ activity.name }}</span><br/>
+    {% endfor %}
+
+    <h3>Goals:</h3>
+    {% for goal in profile.goals.all %}
+        <span>{{ goal.name }}</span>
+    {% endfor %}
+{% endblock %}

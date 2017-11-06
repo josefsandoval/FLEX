@@ -1,0 +1,94 @@
+{% extends 'app/base.html' %}
+{% block body %}
+<style type="text/css">
+    img{
+        max-width: 400px;
+        max-height: 400px;
+    }
+
+    #white-box {
+        background-color: #fff;
+        border: 1px #dedede solid;
+        width: 600px;
+        margin: auto;
+        text-align: left;
+        padding: 10px 15px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        -moz-box-shadow: 0 0 3px #dfdfdf;
+        -webkit-box-shadow: 0 0 3px #dfdfdf;
+        box-shadow: 0 0 3px #dfdfdf;
+
+    }
+
+    #details{
+        background-color: #fff;
+        border: 1px #dedede solid;
+        width: 600px;
+        margin: auto;
+        text-align: left;
+        padding: 10px 15px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        -moz-box-shadow: 0 0 3px #dfdfdf;
+        -webkit-box-shadow: 0 0 3px #dfdfdf;
+        box-shadow: 0 0 3px #dfdfdf;
+    }
+    #about{
+        width:600px;
+        margin: auto;
+        text-align: left;
+        padding: 10px 15px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+
+    .header {
+        font-family: "Arial Black";
+    }
+    .button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+</style>
+    <button class="button">Match {{ user.username }}</button>
+    <button class="button">Send Message</button>
+    <body>
+        <div id="about">
+            <h1>    {{ user }} </h1><br/>
+            <img src="{{ user.userprofile.image_url }}"/>
+            <br/>
+            <br/>
+        </div>
+        <div id="details">
+            <span class="header">Details</span><br/>
+            <span>Height: {{ user.userprofile.height }}</span><br/>
+            <span>Weight: {{ user.userprofile.weight }} </span><br/>
+            {% with my_var=user.userprofile.date_of_birth.year %}
+                <span>Age: {{my_var|add:"-2017"}}</span><br/>
+            {% endwith %}
+            <span>Location: {{ user.userprofile.address_city }}</span><br/>
+        </div>
+        <br/>
+        <div id="white-box">
+            <span class="header">Bio</span>
+            <p>{{ user.userprofile.bio }}</p>
+        </div>
+        <br/>
+        <div id="white-box">
+            <span class="header">Interests</span><br/>
+            {% for activity in user.userprofile.activities.all %}
+                <span>{{ activity.name }}</span><br/>
+            {% endfor %}
+        </div>
+    </body>
+    </html>
+{% endblock %}

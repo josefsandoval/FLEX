@@ -119,3 +119,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# When using Django's login system it redirects us to 'accounts/profile/'
+# change it to our home page instead
+LOGIN_REDIRECT_URL = '/app/profile'
+

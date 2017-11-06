@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FLEX</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'app/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Nav Bar -->
+</head>
+<body>
+    <nav class = "navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class = "navbar-header">
+                <a class="navbar-brand" href="{% url 'app:index' %}">FLEX</a>
+            </div>
+            {% if user.is_authenticated %}
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'app:index' %}">Home</a></li>
+                <li><a href="/app/profile">Profile</a></li>
+                <li><a href="/app/matches">Find Matches</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/app/logout">Log Out</a></li>
+            </ul>
+            {% else %}
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/app/login">Login</a></li>
+                <li><a href="/app/register">Register</a></li>
+            </ul>
+            {% endif %}
+        </div>
+    </nav>
+    {% block body %}
+    {% endblock %}
+</body>
+</html>
