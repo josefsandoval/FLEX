@@ -3,9 +3,10 @@ from __future__ import unicode_literals
 
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
-# login required decorator(give added functionality to a function
+# login required decorator(give added functionality to a function)
 from django.contrib.auth.decorators import login_required
 from django.views import generic
+from django.views.generic.edit import UpdateView
 from .models import UserProfile
 from .models import MatchSetting
 from .models import UserMatch
@@ -16,7 +17,6 @@ class IndexView(generic.ListView):
     template_name = 'app/index.html'
 
     def get_queryset(self):
-        """TODO!"""
         return UserProfile.objects.order_by('first_name')
 
 
@@ -56,9 +56,9 @@ def register(request):
     else:
         # blank user registration form for user to fill in
         form = UserRegisterForm()
-        context = {'form': form}
 
-        return render(request, 'app/registration_form.html', context)
+    context = {'form': form}
+    return render(request, 'app/registration_form.html', context)
 
 
 # request holds several data including data from Django's User obj.
@@ -68,4 +68,15 @@ def profile(request):
     args = {'user': request.user}
     return render(request, 'app/profile.html', args)
 
-# Create your views here.
+
+# Form for user to update profile information
+class EditProfile(UpdateView):
+    model = UserProfile
+
+    def get_object(self):
+        return self.request.user.userprofile
+
+    fields = ['first_name', 'last_name',
+              'date_of_birth', 'gender',
+              'bio', 'activities', 'goals',
+              'image_url', 'height', 'weight']

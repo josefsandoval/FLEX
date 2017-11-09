@@ -18,15 +18,16 @@
             <ul class="nav navbar-nav">
                 <li><a href="{% url 'app:index' %}">Home</a></li>
                 <li><a href="/app/profile">Profile</a></li>
-                <li><a href="/app/matches">Find Matches</a></li>
+                <li><a href="{% url 'app:edit-profile'%}">Edit Profile</a></li>
+                <li><a href="{%url 'app:matches'%}">Find Matches</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/app/logout">Log Out</a></li>
+                <li><a href="{% url 'app:logout'%}">Log Out</a></li>
             </ul>
             {% else %}
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/app/login">Login</a></li>
-                <li><a href="/app/register">Register</a></li>
+                <li><a href="{% url 'app:login'%}">Login</a></li>
+                <li><a href="{% url 'app:register'%}">Register</a></li>
             </ul>
             {% endif %}
         </div>

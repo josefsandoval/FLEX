@@ -23,6 +23,7 @@ class UserRegisterForm(UserCreationForm):
 
         # cleaned data makes sure that data being passed in is valid enough to be stored in the database
         user.email = self.cleaned_data['email']
+        user.username = self.cleaned_data['username']
 
         if commit:
             user.save()  # runs sql on the database to store in the database

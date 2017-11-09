@@ -59,6 +59,7 @@
     cursor: pointer;
 }
 </style>
+
     <button class="button">Match {{ user.username }}</button>
     <button class="button">Send Message</button>
     <body>
@@ -72,9 +73,7 @@
             <span class="header">Details</span><br/>
             <span>Height: {{ user.userprofile.height }}</span><br/>
             <span>Weight: {{ user.userprofile.weight }} </span><br/>
-            {% with my_var=user.userprofile.date_of_birth.year %}
-                <span>Age: {{my_var|add:"-2017"}}</span><br/>
-            {% endwith %}
+            <span>Age: {{user.userprofile.user_age}}</span><br/>
             <span>Location: {{ user.userprofile.address_city }}</span><br/>
         </div>
         <br/>

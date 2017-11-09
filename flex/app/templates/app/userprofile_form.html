@@ -1,11 +1,11 @@
 {% extends 'app/base.html' %}
 {%  block body %}
     <div  class="container">
-        <h2>FLEX Registration</h2>
+        <h2>Edit Profile Info</h2>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }} <!-- render using paragraph tags -->
-        <button type="submit">Register</button>
+        <button type="submit">Update</button>
         </form>
     </div>
 {% endblock %}

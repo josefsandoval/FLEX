@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
 from django.utils import timezone
+from django.core.urlresolvers import reverse
 
 
 class Activity(models.Model):
@@ -31,20 +32,32 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, null=True)
     first_name = models.CharField(max_length=100, default='')
     last_name = models.CharField(max_length=100, default='')
-    date_of_birth = models.DateField(default=timezone.now())
+    date_of_birth = models.DateField(default=timezone.now)
     gender = models.CharField(max_length=1, default='')
     address_street = models.CharField(max_length=100, default='')
     address_city = models.CharField(max_length=100, default='')
     address_zip = models.CharField(max_length=100, default='')
+    address_state = models.CharField(max_length=100, default='')
     address_country = models.CharField(max_length=100, default='')
-    height = models.DecimalField(max_digits=5, decimal_places=2, default=0)
-    weight = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+    height = models.DecimalField(max_digits=5, decimal_places=1, default=0)
+    weight = models.DecimalField(max_digits=6, decimal_places=1, default=0)
     bio = models.CharField(max_length=4096, default='')
     image_url = models.CharField(max_length=1000,
                                  default="https://www.1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images"
                                          "/default-user-image.png")
     activities = models.ManyToManyField(Activity)
     goals = models.ManyToManyField(Goal)
+
+    def user_age(self):
+        import datetime
+        dob = self.date_of_birth
+        today = datetime.date.today()
+        my_age = (today.year - dob.year) - int((today.month, today.day) < (dob.month, dob.day))
+        return my_age
+
+
+    def get_absolute_url(self):
+        return reverse('app:profile')
 
     def __str__(self):
         return self.user.username

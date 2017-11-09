@@ -12,13 +12,17 @@ urlpatterns = [
     url(r'^register/$', views.register, name='register'),
 
     # user login page
-    url(r'^login/$', auth_views.login, {'template_name': 'app/login.html'}),
+    url(r'^login/$', auth_views.login, {'template_name': 'app/login.html'}, name = 'login'),
+
     # user logout page
-    url(r'^logout/$', auth_views.logout, {'template_name': 'app/logout.html'}),
+    url(r'^logout/$', auth_views.logout, {'template_name': 'app/logout.html'}, name = 'logout'),
+
     # individual models
     url(r'^profile/(?P<pk>[0-9]+)/$', views.ProfileView.as_view(), name='profile'),
+
     # view list of other user profiles
     url(r'^matches/$', views.MatchView.as_view(), name='matches'),
+
     # view users own profile
     url(r'^profile/$', views.profile, name='profile'),
 
@@ -27,5 +31,5 @@ urlpatterns = [
     url(r'^userMatch/(?P<pk>[0-9]+)/$', views.UserMatchView.as_view(), name='userMatch'),
 
     # edit User Profile url
-    # url(r'^profile/edit/$', views.edit_profile, name = 'edit_profile'),
+    url(r'^profile/edit/$', views.EditProfile.as_view(), name='edit-profile'),
 ]
