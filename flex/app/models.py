@@ -45,9 +45,11 @@ class UserProfile(models.Model):
     image_url = models.CharField(max_length=1000,
                                  default="https://www.1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images"
                                          "/default-user-image.png")
+    image = models.ImageField(upload_to='profile_image',blank=True)
     activities = models.ManyToManyField(Activity)
     goals = models.ManyToManyField(Goal)
 
+    # Calculate the Users Age
     def user_age(self):
         import datetime
         dob = self.date_of_birth
@@ -55,13 +57,11 @@ class UserProfile(models.Model):
         my_age = (today.year - dob.year) - int((today.month, today.day) < (dob.month, dob.day))
         return my_age
 
-
     def get_absolute_url(self):
         return reverse('app:profile')
 
     def __str__(self):
         return self.user.username
-
 
 # Function to create the users profile when a Django user is created.
 # links the Django User to the Profile model
@@ -71,9 +71,12 @@ def create_user_profile(sender, **kwargs):
         # Create the User's Profile with the current User object
         UserProfile.objects.create(user=kwargs['instance'])
 
-
 # Connect to the post_save signal, Django's User is the sender here
 post_save.connect(create_user_profile, sender=User)
+
+# Friends
+class Friend(models.Model):
+    users = models.ManyToManyField(User)
 
 
 class MatchSetting(models.Model):
@@ -86,39 +89,6 @@ class MatchSetting(models.Model):
 class UserMatch(models.Model):
     user_from = models.ForeignKey(User, related_name='user_match_from', on_delete=models.CASCADE)
     user_to = models.ForeignKey(User, related_name='user_match_to', on_delete=models.CASCADE)
-
-
-# TODO: Activity, Goal, UserActivity, UserGoal
-# get rid of useractivity
-# class UserActivity(models.Model):
-#     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-#
-#     LOW_PRIORITY = 1
-#     MEDIUM_PRIORITY = 2
-#     HIGH_PRIORITY = 3
-#     ACTIVITY_PRIORITY = (
-#         (LOW_PRIORITY, 'Not Interested'),
-#         (MEDIUM_PRIORITY, 'Interested'),
-#         (HIGH_PRIORITY, 'Very Interested')
-#     )
-#     priority = models.IntegerField(choices=ACTIVITY_PRIORITY, default=LOW_PRIORITY)
-
-
-# make this ManyToManyField
-
-
-# class UserGoal(models.Model):
-#     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-#
-#     LOW_PRIORITY = 1
-#     MEDIUM_PRIORITY = 2
-#     HIGH_PRIORITY = 3
-#     GOAL_PRIORITY = (
-#         (LOW_PRIORITY, 'Not Important'),
-#         (MEDIUM_PRIORITY, 'Important'),
-#         (HIGH_PRIORITY, 'Very Important')
-#     )
-#     priority = models.IntegerField(choices=GOAL_PRIORITY, default=LOW_PRIORITY)
 
 
 class Post(models.Model):

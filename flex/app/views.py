@@ -2,19 +2,18 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth.models import User
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 # login required decorator(give added functionality to a function)
 from django.contrib.auth.decorators import login_required
 from django.views import generic
-from django.views.generic.edit import UpdateView
 from .models import UserProfile
 from .models import MatchSetting
 from .models import UserMatch
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, UserProfileForm
 
 
 class IndexView(generic.ListView):
-    template_name = 'app/index.html'
+    template_name = 'app/index1.html'
 
     def get_queryset(self):
         return UserProfile.objects.order_by('first_name')
@@ -32,8 +31,7 @@ class MatchView(generic.ListView):
     template_name = 'app/matches.html'
 
     def get_queryset(self):
-        """TODO!"""
-        return User.objects.order_by('first_name')
+        return User.objects.all().filter().exclude(userprofile=self.request.user.userprofile).order_by('username')
 
 
 class MatchSettingView(generic.DetailView):
@@ -57,7 +55,10 @@ def register(request):
         # blank user registration form for user to fill in
         form = UserRegisterForm()
 
+
     context = {'form': form}
+    if request.user.is_authenticated:
+        return redirect('/app')
     return render(request, 'app/registration_form.html', context)
 
 
@@ -70,13 +71,10 @@ def profile(request):
 
 
 # Form for user to update profile information
-class EditProfile(UpdateView):
-    model = UserProfile
-
-    def get_object(self):
-        return self.request.user.userprofile
-
-    fields = ['first_name', 'last_name',
-              'date_of_birth', 'gender',
-              'bio', 'activities', 'goals',
-              'image_url', 'height', 'weight']
+def edit_profile(request):
+    instance = request.user.userprofile
+    form = UserProfileForm(request.POST or None, instance=instance)
+    if form.is_valid():
+        form.save()
+        return redirect('/app/profile')
+    return render(request, 'app/edit_profile_form.html', {'form': form})

@@ -6,88 +6,94 @@
         max-height: 400px;
     }
 
-    #white-box {
-        background-color: #fff;
-        border: 1px #dedede solid;
-        width: 600px;
-        margin: auto;
-        text-align: left;
-        padding: 10px 15px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
-        -moz-box-shadow: 0 0 3px #dfdfdf;
-        -webkit-box-shadow: 0 0 3px #dfdfdf;
-        box-shadow: 0 0 3px #dfdfdf;
-
+    #user-details {
+        align:left;
     }
 
-    #details{
-        background-color: #fff;
-        border: 1px #dedede solid;
-        width: 600px;
-        margin: auto;
-        text-align: left;
-        padding: 10px 15px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
-        -moz-box-shadow: 0 0 3px #dfdfdf;
-        -webkit-box-shadow: 0 0 3px #dfdfdf;
-        box-shadow: 0 0 3px #dfdfdf;
-    }
-    #about{
-        width:600px;
-        margin: auto;
-        text-align: left;
-        padding: 10px 15px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
-    }
-
-    .header {
-        font-family: "Arial Black";
-    }
     .button {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-}
+      display: inline-block;
+      border-radius: 4px;
+      background-color: green;
+      border: none;
+      color: #FFFFFF;
+      text-align: center;
+      font-size: 14px;
+      padding: 10px;
+      width: 100px;
+      transition: all 0.5s;
+      cursor: pointer;
+      margin: 5px;
+    }
 </style>
-
-    <button class="button">Match {{ user.username }}</button>
-    <button class="button">Send Message</button>
     <body>
-        <div id="about">
-            <h1>    {{ user }} </h1><br/>
-            <img src="{{ user.userprofile.image_url }}"/>
-            <br/>
-            <br/>
-        </div>
-        <div id="details">
-            <span class="header">Details</span><br/>
-            <span>Height: {{ user.userprofile.height }}</span><br/>
-            <span>Weight: {{ user.userprofile.weight }} </span><br/>
-            <span>Age: {{user.userprofile.user_age}}</span><br/>
-            <span>Location: {{ user.userprofile.address_city }}</span><br/>
-        </div>
-        <br/>
-        <div id="white-box">
-            <span class="header">Bio</span>
-            <p>{{ user.userprofile.bio }}</p>
-        </div>
-        <br/>
-        <div id="white-box">
-            <span class="header">Interests</span><br/>
-            {% for activity in user.userprofile.activities.all %}
-                <span>{{ activity.name }}</span><br/>
-            {% endfor %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 panel well">
+                    <div class="col-md-3 col-md-offset-2" >
+                        <img src="{{ user.userprofile.image_url }}"/>
+                    </div>
+
+                    <div class="col-md-4 col-md-offset-2">
+                        <br/><br/><br/>
+                        <h1>{{ user }}</h1>
+                        <h4>{{user.userprofile.user_age }} - {{ user.userprofile.address_city }}, CA</h4><br/>
+                        <button class="button" style="vertical-align:middle">Message</button>
+                        <button class="button" style="vertical-align:middle">Like</button>
+                    </div>
+                </div>
+            </div>
+              <div class="row">
+                <div class="col-md-7">
+
+                  <div class="row">
+                    <div class="col-md-12 well">
+                      <div class="panel panel-default text-left">
+                        <div class="panel-body">
+                          <p contenteditable="true">Status: Feeling Blue</p>
+                          <button type="button" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-thumbs-up"></span> Like
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12 well">
+                      <div class="well">
+                          <h3>About Me</h3>
+                        <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 well">
+                      <div class="well">
+                          <h3>Fitness Goals</h3>
+                        <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3 col-md-offset-2 well">
+                  <div class="well" id="user-details">
+                    <strong><p>Details</p></strong>
+                    <p>Weight: {{user.userprofile.weight}}</p>
+                    <p>Height: {{user.userprofile.height}}</p>
+                    <p>Body Type: {{user.userprofile.height}}</p>
+                    <p>Gender: {{user.userprofile.gender}}</p>
+                    <button class="btn btn-primary">Info</button>
+                  </div>
+                  <div class="well">
+                    <strong><p>Interests</p></strong>
+                    <p>
+                        {% for activity in user.userprofile.activities.all %}
+                            <span class="label label-primary">{{activity.name}}</span>
+                        {% endfor %}
+                    </p>
+                  </div>
+                </div>
+              </div>
         </div>
     </body>
-    </html>
 {% endblock %}

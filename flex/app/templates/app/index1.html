@@ -8,7 +8,10 @@
       <div class="jumbotron">
         <h1 class="display-3">Welcome to FLEX</h1>
         <p class="lead">New Fitness Application</p>
-        <p><a class="btn btn-lg btn-success" href="/app/register" role="button">Sign up today</a></p>
+        {% if user.is_authenticated %}
+        {%else%}
+          <p><a class="btn btn-lg btn-success" href="/app/register" role="button">Sign up today</a></p>
+        {%endif%}
       </div>
 
       <div class="row marketing">

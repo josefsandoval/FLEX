@@ -1,0 +1,46 @@
+img#profile-image{
+    max-width: 400px;
+    max-height: 400px;
+}
+
+
+#white-box {
+    background-color: #fff;
+    border: 1px #dedede solid;
+    width: 600px;
+    margin: auto;
+    text-align: left;
+    padding: 10px 15px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 0 0 3px #dfdfdf;
+    -webkit-box-shadow: 0 0 3px #dfdfdf;
+    box-shadow: 0 0 3px #dfdfdf;
+
+}
+
+#details{
+    background-color: #fff;
+    border: 1px #dedede solid;
+    width: 600px;
+    margin: auto;
+    text-align: left;
+    padding: 10px 15px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 0 0 3px #dfdfdf;
+    -webkit-box-shadow: 0 0 3px #dfdfdf;
+    box-shadow: 0 0 3px #dfdfdf;
+}
+#about{
+    width:600px;
+    margin: auto;
+    text-align: left;
+    padding: 10px 15px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.header {
+    font-family: "Arial Black";
+}

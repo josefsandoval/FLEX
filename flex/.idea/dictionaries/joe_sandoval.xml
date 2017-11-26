@@ -2,6 +2,9 @@
   <dictionary name="joe.sandoval">
     <words>
       <w>endblock</w>
+      <w>endfor</w>
+      <w>endwith</w>
+      <w>userprofile</w>
     </words>
   </dictionary>
 </component>

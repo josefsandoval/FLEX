@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 
-from .models import UserProfile, Activity, Goal
+from .models import UserProfile, Activity, Goal, Friend
 from .models import MatchSetting
 from .models import UserMatch
 
@@ -13,3 +13,4 @@ admin.site.register(MatchSetting)
 admin.site.register(UserMatch)
 admin.site.register(Activity)
 admin.site.register(Goal)
+admin.site.register(Friend)

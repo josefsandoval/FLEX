@@ -1,5 +1,4 @@
 {% extends 'app/base.html' %}
-
 {% block body %}
     <style type="text/css">
         img {
@@ -15,7 +14,6 @@
     {% for activity in profile.activities.all %}
         <span>{{ activity.name }}</span><br/>
     {% endfor %}
-
     <h3>Goals:</h3>
     {% for goal in profile.goals.all %}
         <span>{{ goal.name }}</span>

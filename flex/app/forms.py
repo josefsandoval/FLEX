@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
+from .models import UserProfile
 
 
 # link to info: http://code.techandstartup.com/django/registration/
@@ -28,3 +29,16 @@ class UserRegisterForm(UserCreationForm):
         if commit:
             user.save()  # runs sql on the database to store in the database
         return user
+
+class UserProfileForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(UserProfileForm, self).__init__(*args, **kwargs)
+        self.fields['first_name'].widget = forms.Textarea()
+
+    class Meta:
+        model = UserProfile
+
+        fields = ['first_name', 'last_name',
+                  'date_of_birth', 'gender',
+                  'bio', 'activities', 'goals',
+                  'image_url', 'height', 'weight']

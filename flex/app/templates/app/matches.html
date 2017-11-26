@@ -1,46 +1,59 @@
 {% extends 'app/base.html' %}
-
+{% load functions %}
 {% block body %}
         {% if user_list %}
             <div class="container-fluid bg-3 text-center">
               <h1>Search for Matches</h1><br>
                   <div class="row">
                      {% for user in user_list %}
-                         {% if not user.is_superuser%}
-                             {% if user.id != request.user.id %}
-                                {% for my_activity in request.user.userprofile.activities.all %}
-                                    {% for activity in user.userprofile.activities.all %}
-                                        {% if my_activity == activity %}
-                                            <!-- counter++ -->
-                                            <div class="col-sm-3">
-                                              <h3>{{ user.username }}</h3>
-                                              <a href= "{% url 'app:profile' user.id %}"><img src="{{ user.userprofile.image_url }}" class="img-responsive" style="width:100%" alt="Image"></a>
-                                            </div>
-                                        {%endif%}
-                                    {% endfor%}
-                                 {% endfor %}
-                             {% endif %}
-                        {% endif %}
+                      {%if not user.is_superuser%}
+                            {% if request.user.userprofile.activities.all|intersect_activities:user.userprofile.activities.all|length >= 1%}
+                      <div id="" class="col-sm-3">
+                          <div class = "match_card">
+                          <a class="image_link" href="{%url 'app:profile' user.id %}">
+                          <span class="image_wrapper">
+                              <img src="{{ user.userprofile.image_url }}" alt="profile_picture" style="width:100%; height:100%; object-fit:contain;">
+                          </span>
+                          </a>
+                          <div class="match_card_text">
+                              <div class="profile_info">
+                                  <div class="username"><span class="username-text">
+                              <a href="{%url 'app:profile' user.id %}" class="name">{{ user.username }}</a>
+                          </span>
+                          <span class="onlinedot username-online">
+                          </span>
+                      </div>
+                          <div class="userinfo">
+                              <span class="age">{{user.userprofile.user_age}}</span>
+                              <span class="dot">· </span>
+                              <span class="location">{{user.userprofile.address_city}}, CA</span></div>
+                      </div>
+                      <div class="percentages hide_on_hover">
+                          <div class="percentage_wrapper match">
+                              {% with mine=request.user.userprofile.activities.all|length %}
+                                    {% with match=request.user.userprofile.activities.all|intersect_activities:user.userprofile.activities.all|length %}
+                                        <span style = "color:red;" class="percentage">
+                                            {{match|as_percentage_of:mine}}
+                                        </span>
+                                    {%endwith%}
+                              {% endwith %}
+                              <span class="percentage_label">Match</span>
+                          </div>
+                          <div class="">
+                          </div>
+                      </div>
+                              <button name="like" class="button1">
+                                    <span class="rating_liked">Match</span>
+                              </button>
+                            </div>
+                          </div>
+                      </div>
+                        {%endif%}
+                        {%endif%}
                     {% endfor %}
                   </div>
-            </div>
-            <br>
-
-           <!-- {% for user in user_list %}
-            <h1 style = "color:red;">{{request.user.username}}</h1> # ME 
-            {% if user.id != request.user.id %} # if user is not me
-                    <br/><h1>{{user.username}}</h1>
-                    {%for my_activity in request.user.userprofile.activities.all%}
-                        {%for activity in user.userprofile.activities.all %}
-                            {%if my_activity == activity%}
-                                <h3>**{{activity.name}} equals {{my_activity.}}</h3>
-                            {%endif%}
-                        {%endfor%}
-                    {%endfor%}
-                {%endif%}
-            {%endfor%}
--->
+            </div><br>
         {% else %}
-        <p>No users.</p>
+    <p>No users.</p>
     {% endif %}
 {% endblock %}
