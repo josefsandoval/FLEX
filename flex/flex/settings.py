@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -124,8 +126,8 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'flex/media') # Not good for production, (research static files in production)
 
-
 # When using Django's login system it redirects us to 'accounts/profile/'
 # change it to our home page instead
 LOGIN_REDIRECT_URL = '/app/profile'
 
+CRISPY_TEMPLATE_PACK = 'bootstrap3'

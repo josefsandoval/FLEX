@@ -15,15 +15,6 @@ class Activity(models.Model):
         return self.name
 
 
-class Goal(models.Model):
-    # goal_id = models.ForeignKey(UserGoal, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-    description = models.CharField(max_length=4096)
-
-    def __str__(self):
-        return self.name
-
-
 # make link to activities in user using ManyToManyField
 # link: https://docs.djangoproject.com/en/1.11/ref/models/fields/#django.db.models.ManyToManyField
 # link: https://docs.djangoproject.com/en/1.11/topics/db/queries/
@@ -47,7 +38,7 @@ class UserProfile(models.Model):
                                          "/default-user-image.png")
     image = models.ImageField(upload_to='profile_image',blank=True)
     activities = models.ManyToManyField(Activity)
-    goals = models.ManyToManyField(Goal)
+    goal = models.CharField(max_length=100, default='')
 
     # Calculate the Users Age
     def user_age(self):
@@ -74,9 +65,27 @@ def create_user_profile(sender, **kwargs):
 # Connect to the post_save signal, Django's User is the sender here
 post_save.connect(create_user_profile, sender=User)
 
-# Friends
-class Friend(models.Model):
+
+# User Matches Model: create a many to many relationship
+# Allows many users to have many users
+class UserMatch(models.Model):
     users = models.ManyToManyField(User)
+    current_user = models.ForeignKey(User, related_name='match_list_owner', null=True)
+
+    @classmethod
+    def match_user(cls, current_user, new_match):
+        match, created = cls.objects.get_or_create(current_user=current_user)
+
+        match.users.add(new_match)  # Connect current user(match) with the new_match
+
+    @classmethod
+    def remove_match(cls, current_user, matched_user):
+        match, created = cls.objects.get_or_create(current_user=current_user)
+
+        match.users.remove(matched_user)  # Remove user match from users matches
+
+    def __str__(self):
+        return 'matches for ' + self.current_user.username
 
 
 class MatchSetting(models.Model):
@@ -84,11 +93,6 @@ class MatchSetting(models.Model):
     gender = models.CharField(max_length=1)
     age_min = models.IntegerField()
     age_max = models.IntegerField()
-
-
-class UserMatch(models.Model):
-    user_from = models.ForeignKey(User, related_name='user_match_from', on_delete=models.CASCADE)
-    user_to = models.ForeignKey(User, related_name='user_match_to', on_delete=models.CASCADE)
 
 
 class Post(models.Model):

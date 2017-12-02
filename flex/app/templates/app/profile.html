@@ -9,6 +9,12 @@
     #user-details {
         align:left;
     }
+
+    .matches_list img {
+        width:40px;
+        height:40px;
+        border-radius:50%;
+    }
 </style>
     <body>
         <div class="container">
@@ -33,7 +39,7 @@
                         <div class="panel-body">
                           <p contenteditable="true">Status: Feeling Blue</p>
                           <button type="button" class="btn btn-default btn-sm">
-                            <span class="glyphicon glyphicon-thumbs-up"></span> Like
+                            <span class="glyphicon glyphicon-pencil"></span> Update
                           </button>
                         </div>
                       </div>
@@ -43,15 +49,15 @@
                     <div class="col-md-12 well">
                       <div class="well">
                           <h3>About Me</h3>
-                        <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
+                        <p>{{user.userprofile.bio}}</p>
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-12 well">
                       <div class="well">
-                          <h3>Fitness Goals</h3>
-                        <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
+                          <h3>Goal</h3>
+                        <p>{{user.userprofile.goal}}</p>
                       </div>
                     </div>
                   </div>
@@ -61,7 +67,6 @@
                     <strong><p>Details</p></strong>
                     <p>Weight: {{user.userprofile.weight}}</p>
                     <p>Height: {{user.userprofile.height}}</p>
-                    <p>Body Type: {{user.userprofile.height}}</p>
                     <p>Gender: {{user.userprofile.gender}}</p>
                     <button class="btn btn-primary">Info</button>
                   </div>
@@ -70,6 +75,16 @@
                     <p>
                         {% for activity in user.userprofile.activities.all %}
                             <span class="label label-primary">{{activity.name}}</span>
+                        {% endfor %}
+                    </p>
+                  </div>
+                  <div class="well">
+                    <strong><p>You Liked</p></strong>
+                    <p class="matches_list">
+                        {% for match in matches %}
+                            <a href="{% url 'app:profile' match.id %}">
+                                <img src="{{ match.userprofile.image_url }}"></img> <strong>{{match}}</strong><br>
+                            </a>
                         {% endfor %}
                     </p>
                   </div>

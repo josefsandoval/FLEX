@@ -1,0 +1,71 @@
+<!-- user sign up/login  ability to enter username and password and ability to create the user
+    login: username and password + login button
+    signup: all user fields + signup button
+-->
+{% extends 'app/base.html' %}
+{% block body %}
+<body>
+<div class="container">
+
+      <!-- Jumbotron Header -->
+      <header class="jumbotron jumbotron-fluid">
+        <h4 class="display-3">Welcome to FLEX</h4>
+        <p class="lead">A fitness based social network</p>
+        <div>
+          <img src="../../static/app/images/homepage-icon.png" style="width:100%; height:100%; margin:auto;">
+        </div><br>
+        {%if not user.is_authenticated%}
+          <a href="{% url 'app:login'%}" class="btn btn-primary btn-lg">Sign Up Today!</a>
+        {%endif%}
+      </header>
+
+      <!-- Page Features -->
+      <div class="row text-center">
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <img src="../../static/app/images/get_connected.png" style="width:200px; height:200px; margin:auto;">
+            <div class="card-body">
+              <h4 class="card-title">Discover</h4>
+              <p class="card-text">Discover others with similar interests</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <img src="../../static/app/images/events.png" style="width:200px; height:200px; margin:auto;" >
+            <div class="card-body">
+              <h4 class="card-title">Events</h4>
+              <p class="card-text">Discover and join local fitness events around your area.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <img src="../../static/app/images/forum.png" style="width:200px; height:200px; margin:auto;" >
+            <div class="card-body">
+              <h4 class="card-title">Fitness Advice</h4>
+              <p class="card-text">Forum page where users can ask questions or look for advice</p>
+            </div>
+            <!--<div class="card-footer">-->
+              <!--<a href="#" class="btn btn-primary">Find Out More!</a>-->
+            <!--</div>-->
+          </div>
+        </div>
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+
+    </div> <!-- /container -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+
+</body>
+{% endblock %}

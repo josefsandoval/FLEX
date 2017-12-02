@@ -1,11 +1,18 @@
 {% extends 'app/base.html' %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_utils%}
+{% load crispy_forms_field %}
+{% load crispy_forms_filters %}
 {%  block body %}
     <div  class="container">
-        <h2>Edit Profile Info</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }} <!-- render using paragraph tags -->
-        <button class="btn btn-primary" type="submit">Update</button>
-        </form>
+        <div class="row">
+            <div class="col-sm-12" style="font-size:20px;">
+            <h2>Edit Profile Info</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {% crispy form form.helper %} <!-- render using paragraph tags -->
+                </form>
+            </div>
+        </div>
     </div>
 {% endblock %}
